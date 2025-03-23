@@ -26,7 +26,7 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
     Statement = [{
       Effect = "Allow",
       Principal = {
-        AWS = aws_cloudfront_origin_access_identity.oai.iam_arn
+        AWS = var.cloudfront_oai_iam_arn
       },
       Action = ["s3:GetObject"],
       Resource = ["${aws_s3_bucket.website_bucket.arn}/*"]

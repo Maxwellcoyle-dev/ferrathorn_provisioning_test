@@ -32,7 +32,7 @@ jobs:
       - name: Select/Create Terraform Workspace
         working-directory: ${{ env.TF_WORK_DIR }}
         run: |
-          terraform workspace select ${{ github.event.inputs.customer_name }} || terraform workspace new ${{ github.event.inputs.customer_name }}
+          terraform workspace select -or-create ${{ github.event.inputs.customer_name }}
 
       - name: Terraform Plan
         working-directory: ${{ env.TF_WORK_DIR }}
