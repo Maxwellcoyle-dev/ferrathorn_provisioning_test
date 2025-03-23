@@ -1,3 +1,5 @@
+# environments/dev/main.tf
+
 module "s3_website" {
   source          = "../../modules/s3_website"
   bucket_name     = "gym-${var.customer_name}-bucket-dev"

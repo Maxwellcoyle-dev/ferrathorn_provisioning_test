@@ -1,3 +1,5 @@
+# modules/cloudfront_distribution/main.tf
+
 resource "aws_cloudfront_distribution" "cdn" {
   origin {
     domain_name = var.s3_bucket_domain_name
