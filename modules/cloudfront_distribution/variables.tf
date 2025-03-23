@@ -7,5 +7,5 @@ variable "s3_bucket_domain_name" {
 
 variable "origin_id" {
   type        = string
-  description = "Unique Origin ID for CloudFront"
+  description = "Unique origin ID for CloudFront"
 }

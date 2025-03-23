@@ -2,6 +2,5 @@
 
 variable "customer_name" {
   type        = string
-  description = "Customer Identifier"
+  description = "Unique customer identifier"
 }
-

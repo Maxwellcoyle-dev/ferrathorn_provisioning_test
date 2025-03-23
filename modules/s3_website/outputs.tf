@@ -1,4 +1,7 @@
-output "website_endpoint" {
-  value = aws_s3_bucket_website_configuration.website_config.website_endpoint
-  description = "The endpoint URL of the S3 bucket website configuration"
+output "bucket_id" {
+  value = aws_s3_bucket.website_bucket.id
+}
+
+output "bucket_regional_domain_name" {
+  value = aws_s3_bucket.website_bucket.bucket_regional_domain_name
 }

@@ -1,3 +1,5 @@
+# modules/cloudfront_distribution/main.tf
+
 resource "aws_cloudfront_origin_access_identity" "oai" {
   comment = "OAI for ${var.origin_id}"
 }
