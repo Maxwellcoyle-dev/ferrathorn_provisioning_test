@@ -16,6 +16,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: us-east-1
+      TF_WORK_DIR: ./environments/dev
 
     steps:
       - name: Checkout Repository
@@ -25,17 +26,36 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        working-directory: ./environments/dev
+        working-directory: ${{ env.TF_WORK_DIR }}
         run: terraform init
 
+      - name: Select/Create Terraform Workspace
+        working-directory: ${{ env.TF_WORK_DIR }}
+        run: |
+          terraform workspace select ${{ github.event.inputs.customer_name }} || terraform workspace new ${{ github.event.inputs.customer_name }}
+
       - name: Terraform Plan
-        working-directory: ./environments/dev
+        working-directory: ${{ env.TF_WORK_DIR }}
         run: |
           terraform plan \
             -var="customer_name=${{ github.event.inputs.customer_name }}"
 
       - name: Terraform Apply
-        working-directory: ./environments/dev
+        id: apply
+        working-directory: ${{ env.TF_WORK_DIR }}
+        continue-on-error: true
         run: |
           terraform apply -auto-approve \
+            -var="customer_name=${{ github.event.inputs.customer_name }}"
+
+      - name: Check Terraform Apply Status
+        if: steps.apply.outcome == 'failure'
+        run: |
+          echo "Terraform apply failed. Starting cleanup."
+
+      - name: Terraform Destroy (Cleanup on Failure)
+        if: steps.apply.outcome == 'failure'
+        working-directory: ${{ env.TF_WORK_DIR }}
+        run: |
+          terraform destroy -auto-approve \
             -var="customer_name=${{ github.event.inputs.customer_name }}"
