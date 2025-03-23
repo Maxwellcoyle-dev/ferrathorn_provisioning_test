@@ -1,1 +1,1 @@
-customer_name = "ferrathorn_gym_demo_customer_name_007"
+customer_name = "ferrathorn_gym_demo_customer_007"
