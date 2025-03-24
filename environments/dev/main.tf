@@ -2,7 +2,7 @@
 
 # Step 1: S3 Bucket creation first
 module "s3_bucket" {
-  source      = "../../modules/s3_bucket"
+  source      = "../../modules/s3_website"
   bucket_name = "gym-${var.customer_name}-bucket-dev"
 }
 
