@@ -17,6 +17,8 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: us-east-1
       TF_WORK_DIR: ./environments/dev
+      TF_CLOUD_ORGANIZATION: "<your-terraform-cloud-org>"
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
     steps:
       - name: Checkout Repository
@@ -25,14 +27,13 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
+      - name: Terraform Init (Terraform Cloud Backend)
         working-directory: ${{ env.TF_WORK_DIR }}
         run: terraform init
 
-      - name: Select/Create Terraform Workspace
+      - name: Select/Create Terraform Workspace (Customer Specific)
         working-directory: ${{ env.TF_WORK_DIR }}
-        run: |
-          terraform workspace select -or-create ${{ github.event.inputs.customer_name }}
+        run: terraform workspace select -or-create ${{ github.event.inputs.customer_name }}
 
       - name: Terraform Plan
         working-directory: ${{ env.TF_WORK_DIR }}
