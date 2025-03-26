@@ -17,7 +17,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: us-east-1
       TF_WORK_DIR: ./environments/dev
-      TF_CLOUD_ORGANIZATION: "<your-terraform-cloud-org>"
+      TF_CLOUD_ORGANIZATION: "ferrathorn"
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
     steps:
